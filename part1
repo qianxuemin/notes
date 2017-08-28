@@ -1,3 +1,67 @@
-At first,we should know that:
-object have  __proto__;
-function have prototype;
+记录prototype、proto和constructor的关系：
+以如下代码为例
+
+function Foo(){};
+var f1 = new Foo;
+
+f1 通过构造函数的new操作创建的对象是实例对象。
+Foo() 用来初始化新创建的对象的函数是构造函数。
+
+part1：
+f1.__proto__ === Foo.prototype
+Foo.prototype.constructor === Foo
+Foo.prototype.__proto__ === Object.prototype
+Object.prototype.constructor === Object
+Object.prototype.__proto__ === null
+
+part2：
+Foo.__proto__ === Function.prototype
+Function.prototype.constructor === Function
+Function.prototype.__proto__ === Object.prototype
+Function.prototype === Function.prototype
+Object.prototype.__proto__ === null
+
+详解：
+f1.__proto__ === Foo.prototype
+实例对象有一个__proto__属性，指向该实例对象对应的原型对象
+
+Foo.prototype.constructor === Foo
+原型对象有一个constructor属性，指向该原型对象对应的构造函数
+实例对象Foo.prototype本身具有constructor属性，所以它会覆盖继承自原型对象Object.prototype的constructor属性
+Foo.prototype.hasOwnProperty('constructor')==true
+
+Foo.prototype.__proto__ === Object.prototype
+Foo.prototype是f1的原型对象，同时它也是实例对象。实际上，任何对象都可以看做是通过Object()构造函数的new操作实例化的对象
+所以，Foo.prototype作为实例对象，它的构造函数是Object()，原型对象是Object.prototype。相应地，构造函数Object()的prototype属性指向原型对象Object.prototype；实例对象Foo.prototype的proto属性同样指向原型对象Object.prototype
+
+Object.prototype.__proto__ === null
+如果Object.prototype作为实例对象的话，其原型对象是null。这也是typeof null的结果是'object'的原因之一
+
+f1.constructor === Foo
+实例对象f1本身并没有constructor属性，但它可以继承原型对象Foo.prototype的constructor属性
+
+
+
+Foo.__proto__ === Function.prototype
+Object.__proto__ === Function.prototype
+如果把函数Foo当成实例对象的话，其构造函数是Function()，其原型对象是Function.prototype；类似地，函数Object的构造函数也是Function()，其原型对象是Function.prototype
+
+
+Function.prototype.constructor === Function
+Foo.constructor === Function
+Object.constructor === Function
+原型对象Function.prototype的constructor属性指向构造函数Function()；实例对象Object和Foo本身没有constructor属性，需要继承原型对象Function.prototype的constructor属性
+
+Function.__proto__ === Function.prototype
+Function.prototype.constructor === Function
+Function.prototype === Function.prototype
+所有的函数都可以看成是构造函数Function()的new操作的实例化对象。那么，Function可以看成是调用其自身的new操作的实例化的结果
+所以，如果Function作为实例对象，其构造函数是Function，其原型对象是Function.prototype
+
+Function.prototype.__proto__ === Object.prototype
+如果Function.prototype作为实例对象的话，其原型对象是什么呢？和前面一样，所有的对象都可以看成是Object()构造函数的new操作的实例化结果。所以，Function.prototype的原型对象是Object.prototype，其原型函数是Object()
+
+总结三点：
+1、函数(Function也是函数)是new Function的结果，所以函数可以作为实例对象，其构造函数是Function()，原型对象是Function.prototype
+2、对象(函数也是对象)是new Object的结果，所以对象可以作为实例对象，其构造函数是Object()，原型对象是Object.prototype
+3、Object.prototype的原型对象是null
