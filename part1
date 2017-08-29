@@ -4,6 +4,14 @@
 function Foo(){};
 var f1 = new Foo;
 
+我们可以把new的过程拆分成以下三步：
+
+<1> var f1={};  //初始化一个对象p。
+
+<2> f1.__proto__=Foo.prototype;
+
+<3> Foo.call(f1); //构造f1，也可以称之为初始化f1。
+
 f1 通过构造函数的new操作创建的对象是实例对象。
 Foo() 用来初始化新创建的对象的函数是构造函数。
 
