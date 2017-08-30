@@ -1,10 +1,9 @@
-记录prototype、proto和constructor的关系：
-以如下代码为例
+js原型链 prototype、proto和constructor的关系：
 
 function Foo(){};
 var f1 = new Foo;
 
-我们可以把new的过程拆分成以下三步：
+可以把new的过程拆分成以下三步：
 
 <1> var f1={};  //初始化一个对象p。
 
