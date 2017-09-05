@@ -1,0 +1,25 @@
+1、JavaScript之构造函数内有return时：
+在JavaScript构造函数中：如果return值类型，那么对构造函数没有影响；
+如果return引用类型（数组，函数，对象），那么实例化对象就会返回该引用类型；
+例如：
+<script>  
+    function Person(){  
+//      return 123;                         //值类型  
+//      return "abcdef";                    //值类型  
+//      return ["a","b"];                   //引用类型  
+//      return {a:2};                       //引用类型  
+         return function(){ console.log(1)};   //引用类型  
+ }  
+     Person.prototype.sayHello =  
+           function() {  
+             console.log('hello world');  
+     };  
+     console.log(new Person());  
+  
+//new Person()分别返回以下:  
+//        1. Person{}  
+//        2. Person{}  
+//        3. ["a","b"];  
+//        4. Object {a:2}  
+//        5. function(){ console.log(1)};  
+</script>  
