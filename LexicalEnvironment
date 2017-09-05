@@ -6,3 +6,25 @@ LexicalEnvironment（文法环境）是个对象，它保存了作用域的信�
 函数也是对象 [[scope]]是函数内部的一个属性 该内部属性包含了函数被创建的作用域中的对象集合 
 这个集合被称为函数的作用域链 它决定了哪些数据能被函数访问 
 当函数内部没有某个值的时候 向上一层层查找 构成作用域链 
+
+如下例子：
+<script>
+　　var a = "1";　　　　//声明变量a
+ function b(){　　　　//声明方法b
+  　　alert();
+　　}
+　　var c = function(){ //声明变量c
+　　　　alert();
+　　}
+</script>
+
+预编译阶段：不管代码中声明变量和声明函数的顺序如何，在预编译阶段会先声明变量，再声明函数，生成如下文法环境
+LexicalEnvironment={
+    a ： undefined,
+    c ： undefined,
+    b ：'function(){alert();} '
+}
+
+ 执行阶段：
+ a = "1";
+　c = function(){alert();}
