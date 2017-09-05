@@ -1,5 +1,5 @@
 1、JavaScript之构造函数内有return时：
-在JavaScript构造函数中：如果return值类型，那么对构造函数没有影响；
+在JavaScript构造函数中：如果没有返回值或者return值类型，那么对构造函数没有影响；
 如果return引用类型（数组，函数，对象），那么实例化对象就会返回该引用类型；
 例如：
 <script>  
