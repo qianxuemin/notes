@@ -1,0 +1,131 @@
+<! DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link href="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet">
+</head>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script>
+//ctrl 或 shift多选  类似电脑资源管理器选择
+var Click = [];
+
+function shiftSelect() {
+    $(document).on('click', '.select li', function(e) {
+        if (e.shiftKey) {
+            if (Click.length == 0) {
+                $(this).addClass("selected");
+                Click.push($(this).index());
+            } else if (Click.length == 1) {
+                $(this).addClass("selected");
+                Click.push($(this).index());
+            } else if (Click.length == 2) {
+                $(this).addClass("selected");
+                Click.splice(1, 1, $(this).index());
+            }
+            $(this).siblings().removeClass("selected");
+            var iMin = Math.min(Click[Click.length - 2], Click[Click.length - 1]);
+            var iMax = Math.max(Click[Click.length - 2], Click[Click.length - 1]);
+            for (var i = iMin; i <= iMax; i++) {
+                $(".select li:eq(" + i + ")").addClass("selected");
+            }
+        } else if (e.ctrlKey) {
+            $(this).addClass("selected");
+        } else {
+            $(this).addClass("selected");
+            $(this).siblings().removeClass("selected");
+            Click.length = 0;
+            Click.push($(this).index());
+        }
+        return false;
+    });
+
+}
+
+//单行或多行排序
+function sort() {
+    var group_str = '';
+
+    $(".select>ul").sortable({
+        axis: 'y',
+        containment: 'parent',
+
+        //拖拽时的显示内容
+        helper: function(event, ui) {
+            return jQuery("<div style='background:lightgreen;'>正在排序中...</div>");
+        },
+        start: function(event, ui) {
+            group_str = '';
+            //选中的个数
+            var selecteds = jQuery(".select>ul>li.selected:not(.ui-sortable-placeholder):not(.ui-sortable-helper)");
+            var selecte_num = selecteds.length;
+            if (selecte_num > 1) {
+                selecteds.each(function() {
+                    group_str += '<li class="selected ui-sortable-handle">' + $(this).text() + '</li>';
+                    $(this).addClass("delete_flag")
+                });
+            }
+        },
+        stop: function(event, ui) {
+            //移动选中的dom
+            ui.item.before(group_str)
+            jQuery(".select>ul>li.delete_flag").remove();
+        }
+    });
+}
+$(function() {
+
+    //多选
+    shiftSelect();
+
+    //阻止选取
+    $("body").on("mousedown", function() {
+        return false;
+    })
+
+    //排序
+    sort();
+});
+</script>
+<style>
+.selected {
+    background: #AAAAD8;
+}
+
+li {
+    cursor: pointer;
+    background: tan;
+    list-style: none;
+}
+</style>
+
+<body>
+    <div>实现了按住ctrl或shift多选  以及单行、多行排序</div>
+    <div class="select">
+        <ul>
+            <li>shift多选选中1 </li>
+            <li>shift多选选中2 </li>
+            <li>shift多选选中3 </li>
+            <li>shift多选选中4 </li>
+            <li>shift多选选中5 </li>
+            <li>shift多选选中6 </li>
+            <li>shift多选选中7 </li>
+            <li>shift多选选中8 </li>
+            <li>shift多选选中9 </li>
+            <li>shift多选选中10 </li>
+            <li>shift多选选中11 </li>
+            <li>shift多选选中12 </li>
+            <li>shift多选选中13 </li>
+            <li>shift多选选中14 </li>
+            <li>shift多选选中15 </li>
+            <li>shift多选选中16 </li>
+            <li>shift多选选中17 </li>
+            <li>shift多选选中18 </li>
+            <li>shift多选选中19 </li>
+            <li>shift多选选中20 </li>
+        </ul>
+    </div>
+</body>
+
+</html>
