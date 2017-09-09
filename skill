@@ -1,0 +1,18 @@
+1、稀释连续触发事件 函数节流(throttle) 函数去抖(debounce) 标识变量法 lodash.js
+jQuery(window).on('scroll', _.throttle(updatePosition, 100));
+//方法
+function throttle(fn,wait){
+		var timer;
+		return function(...args){
+			if(!timer){
+				timer=setTimeout(()=>timer=null,wait);
+				return fn.apply(this,args);
+			}
+		}
+	}
+  //用法
+  $("#btn").click(
+		throttle(function(){
+			console.log(222)
+		},500)
+	)
