@@ -13,3 +13,8 @@ mysql_query("SET CHARACTER_SET_RESULTS=UTF8'");
 如构造函数__construct()， 析构函数__destruct()， __call()， __callStatic()， __get()， __set()， __isset()，
 __unset()， __sleep()， __wakeup()， __toString()， __invoke()， __set_state()，
 __clone() 和 __debugInfo() 
+
+4、访问修饰符 
+public（公共的、默认） 
+protected（受保护的） 
+private（私有的）
