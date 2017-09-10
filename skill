@@ -16,3 +16,5 @@ function throttle(fn,wait){
 			console.log(222)
 		},500)
 	)
+2、另存为
+http://bbs.csdn.net/topics/390126645
