@@ -35,3 +35,8 @@ delay(100).then(function(){
 })
 核心原理：执行一个异步任务，会返回一个结果，这个结果是个promise
 它保证他将会变成一个成功或者失败
+
+5、async表示是一个async函数
+await只能用在这个函数里
+await后面跟着的应该是一个promise对象
+
