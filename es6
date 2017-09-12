@@ -39,4 +39,4 @@ delay(100).then(function(){
 5、async表示是一个async函数
 await只能用在这个函数里
 await后面跟着的应该是一个promise对象
-
+区分for in   for of
