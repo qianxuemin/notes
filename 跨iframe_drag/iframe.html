@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>iframe</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <style>
+        body{background: #C2FFB3;}
+        .item-list{
+            list-style: none;
+            padding:0;
+        }
+        .item-list li{
+            line-height: 50px;
+            width:50px;
+            background: #FFDECF;
+            text-align: center;
+            margin-top: 10px;
+            border: 2px solid #525252;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <span>这里是iframe内部啦，拖拽一下试试看</span>
+    <ul class="item-list" id="items">
+        <li draggable="true">1</li>
+        <li draggable="true">2</li>
+        <li draggable="true">3</li>
+        <li draggable="true">4</li>
+        <li draggable="true">5</li>
+        <li draggable="true">6</li>
+    </ul>
+    <script>
+    $(function(){
+        $("#items").find("li").on("dragstart",function(ev){
+            var dt = ev.originalEvent.dataTransfer;
+            dt.setData('Text','cross_iframe_drag_'+$(this).text());
+            dt.effectAllowed = 'move';
+            window.isCrossIFrameDragging = true;
+            window.draggingItem = this;
+        }).on("dragend",function(ev){
+            window.isCrossIFrameDragging = false;
+        });
+ 
+        window.removeDraggingItem = function(){
+            $(window.draggingItem).animate({height:0,opacity:0},1000,function(){
+                 $(this).remove();
+                 $(this).text('888')
+             });
+           // $(window.draggingItem).text('888');
+            window.draggingItem = null;
+        };
+    });
+    </script>
+</body>
+</html>
