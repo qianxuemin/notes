@@ -24,6 +24,7 @@ module.exports=_;//CommonJS
 
 3、解构
 let [a,b]=[1,2,3,4]
+var 会声明提前 let不会
 
 4、promise 告别回调地狱
 比如实现帧动画
@@ -51,4 +52,10 @@ delay(100).then(function(){
 5、async表示是一个async函数
 await只能用在这个函数里
 await后面跟着的应该是一个promise对象
+async await是generator函数的语法糖，解决了异步嵌套黑洞的写法问题 真正解决异步问题的是promise
 区分for in   for of
+
+
+6、babel -node app.js
+7、语法检查
+http://jshint.com/
