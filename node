@@ -1,0 +1,35 @@
+1、一些概念
+node 是基于异步的处理机制
+cpu 时钟周期：1/cpu主频 周期越小，处理速度越快
+处理时间 cpu < 内存 < 硬盘 < 网络
+系统中同步与异步任务达到合适比例n的时候，系统才是最高效的，并不是全同步或全异步高效。
+(Wc+Wp)/(Ws+Wp/p)
+
+操作系统对计算机进行了抽象，将所有输入输出设备抽象为文件，内核进行文件i/o操作时，
+通过文件描述符进行管理。应用程序如果需要进行io需要打开文件操作符，在进行文件和数据的读写，
+异步io不带数据直接返回，要获取数据还需要通过文件描述符再次读取。
+
+2、libuv和V8不是一个线程
+LIBUV库  是Node的新跨平台抽象层，用于抽象 Windows 的 IOCP 及 linux 的 cunstom threadpool，实现事件循环（event loop）和通知机制
+nginx实现负载均衡、反向代理  pm2做负载均衡，启动node程序 
+nodejs代码是单线程的，可以通过两种机制启动 cluster、fork，pm2 start app.js
+
+3、几个特殊API
+1)、setTimeout和setInterval 线程池不参与
+2)、process.nextTick() 实现类似setTimeout(function(){},0),每次调用放入队列中，在下一轮循环中取出
+3)、setimmediate()比process.nextTick()优先级低
+
+4)、node实现sleep
+
+  function sleep(ms){
+  return new Promise(resolve=>
+    setTimeout(resolve,ms))
+  }
+  
+  async function test(){
+    console.log('hello');
+    await sleep(1000);
+    console.log('world');
+  }
+  
+  test()
