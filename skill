@@ -18,3 +18,6 @@ function throttle(fn,wait){
 	)
 2、另存为
 http://bbs.csdn.net/topics/390126645
+
+3、Concurrent.Thread.js
+解决while(true) 阻塞异步事件的问题
