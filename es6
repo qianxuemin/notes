@@ -59,3 +59,9 @@ async await是generator函数的语法糖，解决了异步嵌套黑洞的写法
 6、babel -node app.js
 7、语法检查
 http://jshint.com/
+
+8、var arr1=[1,2,3];
+var arr2=[...arr1];//es
+相当于es5的
+var arr2=[].concat(arr1);
+或 var arr2=arr1.slice(0);
