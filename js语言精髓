@@ -1,4 +1,37 @@
-1、JavaScript之构造函数内有return时：
+1、声明
+var 函数作用域 会变量提前
+console.log(a);
+var a=2; //undefined   
+相当于 
+var a; 
+console.log(a);
+a=2;
+
+let 块级作用域
+
+直接使用 全局作用域
+
+const 常量
+const a=1;
+a=2;//报错 
+
+const b=obj{'prop':'value'};
+b['prop']='value2';//不报错
+b=[];//报错 因为b指向了新的对象 地址变了
+
+2、函数
+函数声明  function a(){}
+函数表达式 var a=function(){}
+Function构造函数 var a=new Function(arg1,arg2...,funcBody)  与evel()一样 安全问题
+箭头函数 var fn=(param)=>{}
+
+普通函数与构造函数并没有区别，使用new关键字调用就是构造函数
+
+普通函数返回值：
+显示调用return 返回return后表达式的求值
+没有调用return 返回undefined
+
+构造函数返回值：
 在JavaScript构造函数中：如果没有返回值或者return值类型，那么对构造函数没有影响；
 如果return引用类型（数组，函数，对象），那么实例化对象就会返回该引用类型；
 例如：
@@ -23,4 +56,50 @@
 //        4. Object {a:2}  
 //        5. function(){ console.log(1)};  
 </script>  
-2、尾调用优化防止栈溢出
+
+3、this和作用域
+普通函数 this指运行时的变量
+（1）严格模式下 默认this为 undefined  es6默认开启严格模式
+（2）非严格模式 默认this为全局对象 node中指globale 浏览器中指window
+构造函数中，this指对象的实例
+对象的方法中，this指对象本身
+es6 箭头函数拥有词法作用域，this在写的时候就明确了是谁，而不是运行时动态修改
+
+4、继承
+继承的目标是子类得到父类的属性和方法
+寄生式组合继承 可读性最好
+function P(name){this.name=name} 
+function C(name){P.call(this,name)} //借用构造函数拿到父类的属性
+inherits(c,p)                       //从prototype拿到父类的方法
+inherits(c,p){
+    var _prototype=Object.create(p.prototype);
+    _prototype.constructor=c.prototype.constructor;
+    c.prototype=_prototype;
+}
+es6语法糖 class extends constructor super 
+
+5、语法 label statement 例如 loop：for(){for(){ break loop}} 可以一次跳出多层循环 但不建议这么写
+Var x={a:1}
+{a:1} //js的特性是语句优先，所以这句执行的结果是返回1
+{a:1，b:2} //逗号后面必须是表达式，所以这句执行报错
+
+6、高阶函数：把函数当作参数或者返回值是函数的函数
+回调函数
+闭包
+惰性函数 如检测浏览器后使用不同的方法
+柯里化：允许使用部分参数生成函数 例如 isNumber
+
+7、反柯里化
+
+Function.prototype.uncurry=function(){return this.call.bind(this);}
+例如push通用化
+var push=Array.prototype.push.uncurry();
+var arr=[];
+push(arr,1)
+
+8、尾调用优化防止栈溢出 典型的菲波那切数列
+尾调用指某个函数的最后一步是调用另一个函数
+函数调用自身，称为递归 ，递归很容易发生栈溢出错误
+如果尾调用自身，就称为尾递归
+
+抽象变化 封装共性
