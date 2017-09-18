@@ -33,3 +33,12 @@ nodejs代码是单线程的，可以通过两种机制启动 cluster、fork，pm
   }
   
   test()
+5、PM2是一个带有负载均衡功能的node应用的进程管理器
+内建负载均衡（使用node cluster集群模块）
+后台运行
+0秒停机重载
+具有ubuntu和centos的启动脚本
+停止不稳定的进程
+控制台检测
+提供http api
+远程控制和实时的接口api
