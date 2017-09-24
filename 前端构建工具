@@ -1,0 +1,6 @@
+1、webpack。万物皆模块 模块化打包工具 核心是loader
+2、gulp grunt。gulp基于文件流、grunt基于文件i/o，gulp更快 gulp编译node更好 因为webpack会生成很多无用代码。
+3、yo。 发布一些自己的模块
+4、brower。 安装依赖
+5、browserify。  让本地的js应用服务端的js，让本地的js具有require的能力
+6、roolup。 支持amd cmd等打包规则，支持tree-shaking webpack3也有了
