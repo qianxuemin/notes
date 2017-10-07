@@ -37,7 +37,7 @@ exit 退出远程
 
 
 免密登陆
-ssh-keygen -t rsa -C test_user -f test_key
+ssh-keygen -t rsa -C "test_user" -f "test_key"
 //生成密钥 使用rsa加密算法 用户名字  密钥对文件名
 直接回车 不输入密码
 
@@ -67,3 +67,11 @@ svn help
 git help
 
 brew安装
+
+
+远程传文件
+scp命令
+或安装samba共享  yum install samba
+并在etc文件下配置 cd/etc/、cd samba/、【homes】 path、 creat mask
+systemctl start smb (centos7之后版本启动服务)
+service smb start(centos7之前版本启动服务)
