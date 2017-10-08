@@ -1,0 +1,16 @@
+Travis CI ,Jenkins
+jre java运行环境 
+jdk java开发环境
+
+（centos下操作）
+1、安装jre  
+yum search java | grep -i --color JDK
+yum install java-1.8.0-openjdk.x86_64
+
+2、下载安装jenkins  参考：https://jenkins.io/doc/pipeline/tour/getting-started/
+wget http://mirrors.jenkins.io/war-stable/latest/jenkins.war
+3、Open up a terminal in the download directory.
+4、Run java -jar jenkins.war --httpPort=8080.
+5、Browse to http://localhost:8080.
+6、Follow the instructions to complete the installation.
+
