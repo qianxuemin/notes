@@ -1,0 +1,55 @@
+nginx 
+反向代理 比如服务器集群中每台服务器内容都一样的时候，我们通过第三方服务器来访问集群，我们并不知道是集群中哪台服务器为我们提供的内容。
+正向代理 比如网站A访问不了网站B，但C可以访问B，那我们可以通过访问C来访问B，我们明确知道B是什么。
+负载均衡 从集群中选择压力较小的服务器，然后将请求引入该选择的服务器，保证服务器集群中每个服务器的压力趋于平衡，分担服务器压力。
+
+nginx通过反向代理实现负载均衡。
+用户首先访问nginx服务器，然后nginx服务器再从服务器集群中选择压力较小的服务器，然后将访问引向该服务器。若服务器集群中某个服务器崩溃，那么从待选服务器列表中删除该服务器，nginx不会将访问请求引入该服务器。
+
+HTTP Upstream模块是Nginx服务器的一个重要模块，实现在轮询和客户端ip之间实现后端的负载均衡。
+ip_hash指令  如果客户端已经访问了集群中的服务器A并登录，那么第二次请求的时候，会将请求通过哈希算法自动定位到该服务器，而不是重新定位到集群中的一个服务器
+server指令
+uostream指令
+
+
+部署NodeJS
+1、open https://brew.sh/index_zh-cn.html
+2、brew search nginx  brew install nginx
+3、brew info nginx
+4、nginx -v 查看nginx信息
+5、启动 sudo brew services start nginx（默认端口8080）或直接 nginx 启动
+   关闭 sudo brew services stop nginx   停止 nginx -s stop   重启 nginx -s reload
+
+6、浏览器打开 http://localhost:8080/
+若安装了Jenkins 需要停服务 
+mac下停止jenkins    sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist
+CentOS7启动jenkins systemctl start jenkins
+
+7、配置nginx 目录为 /usr/local/etc/nginx/nginx.conf
+http
+{
+    upstream test.com {
+        #每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。
+        ip_hash;
+        #upstream的负载均衡，weight是权重，可以根据机器配置定义权重。weigth参数表示权值，权值越高被分配到的几率越大。
+        server 192.168.80.121:80 weight=3;
+        server 192.168.80.122:80 weight=2;
+        server 192.168.80.123:80 weight=3;
+    }
+
+    #虚拟主机的配置
+    server
+    {
+        listen 8080；
+        #对 "/" 启用反向代理
+        location / {
+            proxy_pass http://test.com;
+         }
+    }
+}
+
+  nginx -t 测试nginx配置文件是否正确
+  自定义配置文件  nginx -c /path/to/nginx.conf
+
+8、拷贝配置文件到Node项目目录重新修改
+9、服务端nginx地址
