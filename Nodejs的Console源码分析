@@ -1,0 +1,157 @@
+// 指示javascript引擎切换到严格模式。
+'use strict';
+//引入工具类包，有一些帮助函数可以使用，这里主要使用的是格式化的部分。
+var util = require('util');
+// 控制台对象构造函数
+//@stdout 标准输出对象
+//@stderr 标准错误输出对象
+function Console(stdout, stderr) {
+  //检查当前对象是否为Console
+  if (!(this instanceof Console)) {
+    return new Console(stdout, stderr);
+  }
+  //检查输入参数， 确保输入参数stdout对象上有write属性，并且为函数
+  // 也就是说，只要对象上有write属性，都可以为stdout对象
+  if (!stdout || !util.isFunction(stdout.write)) {
+    throw new TypeError('Console expects a writable stream instance');
+  }
+  // 如果stderr的参数没有被指定，直接使用stdout参数
+  if (!stderr) {
+    stderr = stdout;
+  }
+  //定义属性
+  var prop = {
+    writable: true,
+    enumerable: false,
+    configurable: true
+  };
+  // 属性值
+  prop.value = stdout;
+  //为Console对象定义_stdout 属性
+  Object.defineProperty(this, '_stdout', prop);
+  // 属性值
+  prop.value = stderr;
+  //为Console对象定义_stderr 属性
+  Object.defineProperty(this, '_stderr', prop);
+  // 属性值 
+  prop.value = Object.create(null);
+  //为Console对象定义_times 属性
+  Object.defineProperty(this, '_times', prop);
+
+  // bind the prototype functions to this Console instance
+  var keys = Object.keys(Console.prototype);
+  // 将原形方法上的属性绑定到Console对象上。 
+  for (var v = 0; v < keys.length; v++) {
+    var k = keys[v];
+    this[k] = this[k].bind(this);
+  }
+}
+//总结上述Console的构造函数，其做了下面几步：
+//step1： 检查参数，确保参数合法，默认stderr用stdout
+//step2:  为Console对象定义_stdeout, _stderr 等属性
+//step3:  将原型总的属性或者方法拷贝到Console对象上。  
+
+// 定义Console的原型方法log
+Console.prototype.log = function() {
+// 实质上就是调用_stdout 的write方法。手续需要格式化参数
+  this._stdout.write(util.format.apply(this, arguments) + '\n');
+};
+
+// 实质上info函数是log函数的别名
+Console.prototype.info = Console.prototype.log;
+
+// 定义Console的原型方法warn 
+Console.prototype.warn = function() {
+  // 实质上就是调用_stderr的write方法。需要格式化参数
+  this._stderr.write(util.format.apply(this, arguments) + '\n');
+};
+
+// 实质上error函数是warn函数的别名
+Console.prototype.error = Console.prototype.warn;
+
+// 直接输出某个对象
+Console.prototype.dir = function(object, options) {
+  // 注意使用的还是_stdout属相上的write方法
+  // 不过在此前，其调用的工具类inspect方法去格式化具体的对象
+  // 这个函数可以用于输出Javascript对象进行调试分析
+  this._stdout.write(util.inspect(object, util._extend({
+    customInspect: false
+  }, options)) + '\n');
+};
+
+// 时间函数， 计时开始函数
+Console.prototype.time = function(label) {
+  // 在times空对象上加入label属性，属性值为当前时间，
+  // 其实就是相当于开始计时函数 
+  this._times[label] = Date.now();
+};
+
+// 时间函数， 计时结束函数,并且输出时间
+
+Console.prototype.timeEnd = function(label) {
+  //读取开始时间 
+  var time = this._times[label];
+  // 检查是否有开始时间，如果没有，直接抛出异常
+  if (!time) {
+    throw new Error('No such label: ' + label);
+  }
+  // 计算计时时间
+  var duration = Date.now() - time;
+   // 输出计时时间
+  this.log('%s: %dms', label, duration);
+};
+
+// 输出当前的调用堆栈信息
+Console.prototype.trace = function trace() {
+  // TODO probably can to do this better with V8's debug object once that is
+  // exposed.
+  // 创建Error对象，并用全局函数Error.captureStackTrace来初始化
+  // 堆栈信息
+  var err = new Error;
+  err.name = 'Trace';
+  err.message = util.format.apply(this, arguments);
+  Error.captureStackTrace(err, trace);
+  // 利用error函数，也就是stderr属性的write方法输出
+  this.error(err.stack);
+};
+
+// 基本等同于assert.ok的使用
+// 只有第一个参数为假的时候，会有作用，也就是出错
+Console.prototype.assert = function(expression) {
+  if (!expression) {
+    // 获取格式化的参数，除掉第一个为假的表达式  
+    var arr = Array.prototype.slice.call(arguments, 1);
+    // 只不过需要util.format格式化参数，也就是说，
+    //这里面可以使用'%d', '%s'等。
+    require('assert').ok(false, util.format.apply(this, arr));
+  }
+};
+
+// 导出的对象本身就是一个新的Console对象，注意使用的参数为
+// process.stdout, process.stderr
+// 所以，我们可以直接用下面的用法：
+// var tmpConsole = require('console')
+// tmpConsole.log('test %d', 0); 
+// 从官方文档中，我们可以直接用全局的console对象。
+module.exports = new Console(process.stdout, process.stderr);
+// 导出Console的构造函数
+//我们可以这么用
+// var Console = require('console').Console;
+// var tmpConsole = new Console(process.stdout, process.stderr);
+module.exports.Console = Console;
+
+
+
+so ：
+Console类其实是一种输出的封装，默认的是使用process.stdout,process.stderr，
+用户可以使用其他的输出，如输出到文件进行定制，只要新创建的对象提供了write方法就可以。如下面的使用方法：
+
+// 创建标准输出对象到文件
+var output = fs.createWriteStream('./stdout.log');
+// 创建标准错误输出对象到文件
+var errorOutput = fs.createWriteStream('./stderr.log');
+// 创建自己的Console对象
+var logger = new Console(output, errorOutput);
+var count = 5;
+// 直接输出到文件stdout.log中
+logger.log('count: %d', count);
