@@ -1,0 +1,17 @@
+记录NW开发桌面应用的一点笔记 
+mac平台下
+1、初始化包：npm init
+2、修改主入口:"main": "index.html"
+3、sudo npm install nw -g
+4、将项目文件压缩为zip包 改名为app.nw文件
+5、下载nw.js壳 ：https://nwjs.io/
+6、拷贝出nwjs.app，改名如mynw.app，项目目录执行zip -r ../mynw.app/Contents/Resources/app.nw *
+7、右键 显示包内容,修改图标等信息， png转换icns格式图标工具： https://iconverticons.com/online/
+
+
+windows平台下
+1、开发过程与mac一致
+2、开发完成下载nw.js壳，将步骤1开发的文件内容全部拷贝到壳中
+3、下载Enigma Vitual Box进行封包，主程序选择nw.exe,除此之外的文件放到封包文件中
+4、可以修改package中的配置 ，如icon替换图标等
+5、强行替换exe程序图标 https://www.cnblogs.com/hoobey/p/6063257.html
