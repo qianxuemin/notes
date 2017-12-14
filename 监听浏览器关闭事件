@@ -1,0 +1,9 @@
+监听浏览器关闭事件
+      var hWindow = window.open(opurl, theWindowName, feature, true);
+					var loop=setInterval(function(){
+						if(hWindow.closed){
+							clearInterval(loop);
+              //这里处理关闭后的逻辑
+						}
+					},1000)
+				}
