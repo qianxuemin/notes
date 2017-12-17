@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>canvas绘制小球</title>
+</head>
+<body>
+<pre>
+    需求实现过程
+        1、绘制小球
+        2、绘制多个小球
+        3、定点绘制加随机绘制
+        4、批量绘制
+        5、增加功能
+   </pre>
+<canvas id="mycanvas" width="600" height="400" style="background:black"></canvas>
+
+<script>
+    window.onload=function(){
+        //获取渲染的上下文
+        var ctx=mycanvas.getContext('2d');
+        var width=mycanvas.width;
+        var height=mycanvas.height;
+        ctx.fillStyle='red';
+
+        //创建一个绘制类小球
+        function Ball(x,y,r){
+            this.x=x;
+            this.y=y;
+            this.r=r;
+        }
+
+        Ball.prototype.draw=function(){
+            ctx.beginPath();
+            //绘制路径
+            ctx.arc(this.x,this.y,this.r,0,2*Math.PI,true);
+            ctx.closePath();
+            //填充颜色
+            ctx.fill();
+        }
+
+        /****1、直接实现 缺点 创建多个球时 全局变量污染****/
+        /*   var x1=Math.random()*width;
+           var y1=Math.random()*height;
+           var r1=Math.random()*10+10;
+           var ball1=new Ball(x1,y1,r1);
+           ball1.draw();*/
+
+        /*****2简单工厂模式实现  有时候我们想加一个固定点绘制 有时候想在随机点绘制  传参数实现*****/
+        /*var BallFactory=function(x,y,r){
+            var x=x||Math.random()*width;
+            var y=y||Math.random()*height;
+            var r=r||Math.random()*10+10;
+            var ball=new Ball(x,y,r);
+            return ball;
+        }
+
+        var b1=BallFactory();
+        b1.draw()
+
+        var b2=BallFactory();
+        b2.draw()
+
+        var b3=BallFactory(20,20,20);
+        b3.draw()*/
+
+        /****3、批量生产 第一种方式****/
+        /**
+         *@num 表示生产个数
+         */
+        /*function ManyBallFactory(num){
+            var arr=[]
+            for(var i=0;i<num;i++){
+                arr.push(new BallFactory())
+            }
+            return arr;
+        }
+
+        var ballArr=ManyBallFactory(20)
+        ballArr.forEach(function(value,index,arr){
+            //console.log(arguments)
+            value.draw();
+        })*/
+
+        //工厂模式就是用来创建的  所以将绘制的过程放到外面实现
+
+
+        /****4、批量生产 第二种方式 将创建的过程合并****/
+        /*var BallFactory=function(num){
+            if(num){
+                var result=[];
+                for(var i=0;i<num;i++){
+                    //调用原函数实现
+                    //result.push(BallFactory())
+                    //调用当前函数实现 优
+                    result.push(arguments.callee())
+                }
+                return result;
+            }else{
+                var x=x||Math.random()*width;
+                var y=y||Math.random()*height;
+                var r=r||Math.random()*10+10;
+                 return new Ball(x,y,r);
+            }
+        }
+
+        var newBallFactory=BallFactory;
+        BallFactory=null;
+
+        var b1=newBallFactory().draw()
+        var b2=newBallFactory(30)
+
+         b2.forEach(function(value,index,arr){
+            //console.log(arguments)
+            value.draw();
+        })*/
+
+
+        //我们希望创建的小球可以移动 但是不能修改这个类  可以通过创建寄生工厂模式实现
+        function MoveBallFactory(){
+            //我们对创建的结果增加一些功能，但是不能修改这个Ball类 此时我们只能修改实例化对象了
+            //第一步 创建实例化对象
+            var x=Math.random()*width;
+            var y=Math.random()*height;
+            var r=Math.random()*10+10;
+
+            //避免小球生成在画布外
+            if(x-r<0){
+                x=r;
+            }else if(x+r>width){
+                x=width-r;
+            }
+
+            if(y-r<0){
+                y=r;
+            }else if(y+r>width){
+                y=width-r;
+            }
+            var ball=new Ball(x,y,r);
+            //第二步 拓展一些方法增强 要为小球增加一些方法属性
+            ball.vx=Math.random()*2+2; //水平速度
+            ball.vy=Math.random()*2+2; //垂直速度
+            ball.move=function(){
+                var me=this;
+                setInterval(function(){
+                    //边界判定
+                    //如果小球即将出现在画布外边，我们队小球速度取反
+                    if(me.x -me.r<0||me.x+me.r>width){
+                        me.vx=-me.vx
+                    }
+                    if(me.y -me.r<0||me.y+me.r>height){
+                        me.vy=-me.vy;
+                    }
+                    me.x+=me.vx;
+                    me.y+=me.vy;
+                    //清空画布 要不然就连续绘制画成线了
+                    ctx.clearRect(0,0,width,height)
+                    me.draw();
+                },30)
+            }
+            return ball;
+        }
+
+
+        var ball1=MoveBallFactory();
+        ball1.move();
+    }
+</script>
+</body>
+</html>
