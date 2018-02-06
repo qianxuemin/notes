@@ -75,3 +75,11 @@ scp命令
 并在etc文件下配置 cd/etc/、cd samba/、【homes】 path、 creat mask
 systemctl start smb (centos7之后版本启动服务)
 service smb start(centos7之前版本启动服务)
+
+一、mac 查看指定端口被谁占用并杀死该进程
+1、 查看占用某个端口的进程(如8080)
+lsof -i:8080
+
+2、根据进程id杀进程(如PID为1412)
+kill 1412
+
