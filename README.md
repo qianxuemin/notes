@@ -1,3 +1,3 @@
-#notes
-对原型链的理解
-apply 、 call 、bind用法
+### 记录了一些工作中遇到的问题和小技巧
+- 比如对原型链的理解
+- 比如apply 、 call 、bind用法 ...
