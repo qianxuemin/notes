@@ -14,6 +14,10 @@
         5、增加功能
    </pre>
 <canvas id="mycanvas" width="600" height="400" style="background:black"></canvas>
+<audio id="tts_autio_id" autoplay="autoplay">
+    <source id="tts_source_id" src="http://tts.baidu.com/text2audio?lan=zh&ie=UTF-8&spd=4&text=我是语音，来王者荣耀啊，我带你们飞" type="audio/mpeg">
+    <embed id="tts_embed_id" height="0" width="0" src="">
+</audio>
 
 <script>
     window.onload=function(){
@@ -155,7 +159,7 @@
                     //清空画布 要不然就连续绘制画成线了
                     ctx.clearRect(0,0,width,height)
                     me.draw();
-                },30)
+                },10)
             }
             return ball;
         }
