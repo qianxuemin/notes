@@ -1,0 +1,53 @@
+// 高阶函数实现AOP 面向切面编程的主要作用是把一些核心业务逻辑模块无关的
+// 功能抽离出来。在Javascript中实现AOP，都是指把一个函数“动态织入”到另一个函数之中，
+// 其实现的技术有很多，如下通过扩展Function.prototype来做到这一点。
+Function.prototype.before = function(beforefn) {
+    var _self = this; //保存原函数的引用
+    return function() { //返回包含了原函数和新函数的“代理”函数
+        beforefn.apply(this, arguments); //执行新函数，修正this
+        return _self.apply(this, arguments) //执行原函数
+    }
+};
+
+Function.prototype.after = function(afterfn) {
+    var _self = this;
+    return function() {
+        var ret = _self.apply(this, arguments);
+        afterfn.apply(this, arguments);
+        return ret;
+    }
+};
+
+var func = function() {
+    console.log('我是原函数')
+};
+
+func = func.before(function() {
+    console.log('我是before');
+}).after(function() {
+    console.log('我是after');
+});
+func()
+
+// 上面的AOP实现是在Function.prototype上添加before和after方法，
+// 但许多人不喜欢这种污染原型的方式，name我们可以做一些变通，把原函数
+// 和新函数都作为参数传入before或者after方法
+var before = function(fn, beforefn) {
+    return function() {
+        beforefn.apply(this, arguments);
+        return fn.apply(this, arguments);
+    }
+}
+var a = before(
+    function() {
+        console.log(3)
+    },
+    function() {
+        console.log(2)
+    }
+);
+
+a = before(a, function() {
+    console.log(1)
+});
+a();
