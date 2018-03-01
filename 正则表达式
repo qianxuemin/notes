@@ -1,0 +1,11 @@
+# 正则表达式demo之 
+
+- 单词边界 /\bis\b/
+
+var reg=/is/
+'this is a boy'.replace(reg,'X')
+//输出  "thX is a boy"
+
+var reg=/\bis\b/
+'this is a boy'.replace(reg,'X')
+// 输出 "this X a boy"
