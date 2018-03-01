@@ -1,0 +1,7 @@
+1、HTML5 WebWork
+
+2、ConcurrentThread.js模拟多线程
+下载地址：http://download.csdn.net/download/include_define/796952
+教程文档：http://www.cnblogs.com/0banana0/archive/2011/06/01/2067402.html
+
+// 浏览器事件触发线程，ajax，setTimeout，setInterval都会被放入最后面的一个程序池。
