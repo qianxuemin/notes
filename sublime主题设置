@@ -1,0 +1,20 @@
+ 1、seti UI 主题设置：Preference-Settings-User
+{
+	"Seti_SB_big": true,
+	"Seti_SB_med": true,
+	"Seti_no_blue_bar": true,
+	"Seti_tabs_med": true,
+	"Seti_tabs_small": true,
+	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
+	"font_size": 16,
+	"highlight_line": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"tab_size": 4,
+	"theme": "Seti.sublime-theme",
+	"translate_tabs_to_spaces": true
+}
+
+2、
