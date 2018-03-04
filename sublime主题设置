@@ -1,4 +1,4 @@
- 1、seti UI 主题设置：Preference-Settings-User
+ 1、主题一：seti UI 主题设置：Preference-Settings-User
 {
 	"Seti_SB_big": true,
 	"Seti_SB_med": true,
@@ -17,4 +17,4 @@
 	"translate_tabs_to_spaces": true
 }
 
-2、
+2、主题二：material-theme  https://github.com/equinusocio/material-theme
