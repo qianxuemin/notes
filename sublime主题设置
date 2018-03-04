@@ -6,7 +6,8 @@
 	"Seti_tabs_med": true,
 	"Seti_tabs_small": true,
 	"color_scheme": "Packages/Color Scheme - Default/Monokai.tmTheme",
-	"font_size": 16,
+	"font_size": 13,
+	"font_face":"Comic Sans MS",
 	"highlight_line": true,
 	"ignored_packages":
 	[
