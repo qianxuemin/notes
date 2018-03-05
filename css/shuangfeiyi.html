@@ -1,0 +1,62 @@
+<!-- 双飞翼布局 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>双飞翼布局与假等高</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .left{
+            width:300px;
+            background: #E79F6D;
+            float:left;
+            margin-left: -100%;
+        }
+        .right{
+            width:200px;
+            background: #77BBDD;
+            float:left;
+            margin-left: -200px;
+        }
+        .main{
+            background: #D6D6D6;
+            width:100%;
+            float:left;
+        }
+        .main .mc {
+            margin-left: 300px;
+            /*去掉下面可做两列布局*/
+            margin-right: 200px;
+        }
+        /*制作假等高*/
+        .con{
+            overflow: hidden;
+        }
+        .main,.left,.right{
+            padding-bottom: 9999px;
+            margin-bottom: -9999px;
+        }
+
+    </style>
+
+</head>
+<body>
+<header>实现了双飞翼布局与假的等高 中间部分始终显示最高的高度</header>
+<!--双飞翼 start-->
+<div class="con">
+    <div class="main">
+        <div class="mc">Main</div>
+    </div>
+    <div class="left">
+        Left
+        <p>第二行</p>
+    </div>
+    <div class="right">Right</div>
+</div>
+<!--双飞翼 end-->
+<footer>我是底部</footer>
+</body>
+</html>

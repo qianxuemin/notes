@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3d案例与库</title>
+</head>
+<body>
+<h3>1、一些比较好的3d案例</h3>
+<ul>
+    <li><a href="http://720yun.com/" target="_blank">1.http://720yun.com/</a></li>
+    <li><a href="http://www.h5doo.com/" target="_blank">2.http://www.h5doo.com/</a></li>
+</ul>
+<h3>2、js调用原生API--陀螺仪和加速器 js中</h3>
+<h3>3、摇一摇的实现</h3>
+<h3>4、3d库</h3>
+<ul>
+    <li><a href="https://github.com/bitworking/CSS3D" target="_blank">1.CSS 3D engine</a></li>
+    <li><a href="http://www.jq22.com/jquery-info178" target="_blank">2.轻量级的的视差引擎Parallax.js/</a></li>
+</ul>
+</body>
+<script>
+    //js调用原生API--陀螺仪和加速器
+    //1、 获取旋转角度
+    var deviceOrientationData = null;
+    window.addEventListener('deviceorientation', function (event) {
+        deviceOrientationData = event;
+        console.log(deviceOrientationData)
+    }, false);
+    // 2 获取罗盘校准
+    window.addEventListener('compassneedscalibration', function(event) {
+        alert('您的罗盘需要校准');
+        event.preventDefault();
+    },true);
+    // 3 重力加速度
+    window.addEventListener('devicemotion', function(e){
+        // 移动加速度值
+        var l=e.accelerationIncludingGravity;
+        // 移动时旋转角度
+        var r=e.rotationRate;
+
+    }, true);
+
+
+
+    // ---------------------------摇一摇的实现 start
+    //运动事件监听
+    if (window.DeviceMotionEvent) {
+        window.addEventListener('devicemotion',deviceMotionHandler,false);
+    }
+
+    //获取加速度信息
+    //通过监听上一步获取到的x, y, z 值在一定时间范围内的变化率，进行设备是否有进行晃动的判断。
+    //而为了防止正常移动的误判，需要给该变化率设置一个合适的临界值。
+    var SHAKE_THRESHOLD = 4000;
+    var last_update = 0;
+    var x, y, z, last_x = 0, last_y = 0, last_z = 0;
+    function deviceMotionHandler(eventData) {
+        var acceleration =eventData.accelerationIncludingGravity;
+        var curTime = new Date().getTime();
+        if ((curTime-last_update)> 10) {
+            var diffTime = curTime -last_update;
+            last_update = curTime;
+            x = acceleration.x;
+            y = acceleration.y;
+            z = acceleration.z;
+            var speed = Math.abs(x +y + z - last_x - last_y - last_z) / diffTime * 10000;
+            if (speed > SHAKE_THRESHOLD) {
+                alert("你中奖啦！");  // Do something
+            }
+            last_x = x;
+            last_y = y;
+            last_z = z;
+        }
+    }
+    // ---------------------------摇一摇的实现 end
+</script>
+</html>
