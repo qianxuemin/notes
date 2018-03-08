@@ -70,4 +70,4 @@ http
 11、./nginx              启动服务  配置文件为nginx.conf    vi nginx.conf
 12、ps aux | grep nginx   过滤查看ngin进程
 13、kill pid   通过pid杀进程 杀主进程 pid小的为主进程 （kill -9 pid 强制杀进程 慎用！！）
-14、netstat -atunlp |grep 80             查看占用某个端口的进程(centos7.0以上用 ss 命令)
+14、netstat -atunlp |grep 80              查看占用某个端口的进程(centos7.0以上用 ss 命令)
