@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css技巧</title>
+</head>
+<body>
+<p>1、Reset.css 重置 Normalize.css修复 Neat.css融合</p>
+<p>2、移动端必备 html{box-sizing: border-box;} *,*:before,X:after{box-sizing: inherit;}</p>
+<p>3、css icon <a href="http://cssicon.space/#/" target="_blank">http://cssicon.space/#/</a></p>
+<p>4、关于设计的js</p>
+<ul>
+    <li> underline.js</li>
+    <li> responsify.js</li>
+    <li> typedetail.com</li>
+    <li> cssicon.space</li>
+    <li> designresearch.space</li>
+</ul>
+<p>5、css hint</p>
+<pre>
+    1.不要使用多个class选择元素，如a.foo.boo，这在ie6及以下不能正确解析
+    2.移除空的css规则，如a{}
+    3.正确的使用显示属性，如display:inline不要和width，height，float，margin,padding同时使用，display:inline-block不要和float同时使用等
+    4.避免过多的浮动，当浮动次数超过十次时，会显示警告
+    5.避免使用过多的字号，当字号声明超过十种时，显示警告
+    6.避免使用过多web字体，当使用超过五次时，显示警告
+    7.避免使用id作为样式选择器
+    8.标题元素只定义一次
+    9.使用width:100%时要小心
+    10.属性值为0时不要写单位
+    11.各浏览器专属的css属性要有规范，
+    例如.foo{-moz-border-radius:5px;border-radius:5px}
+    12.避免使用看起来像正则表达式的css3选择器
+    13.遵守盒模型规则
+</pre>
+<p>6、title提示 <a href="https://kushagragour.in/lab/hint/">hint.css</a></p>
+<p>7、BFC</p>
+<pre>
+    1、哪些元素会生成BFC？
+    根元素
+    float属性不为none
+    position为absolute或fixed
+    display为inline-block, table-cell, table-caption, flex, inline-flex
+    overflow不为visible
+
+    2、BFC解决的问题
+    BFC的区域不会与float box重叠
+    清除内部浮动 计算BFC的高度时，浮动元素也参与计算
+    防止垂直 margin 重叠
+
+    经典清除浮动方式为：
+    .clearFix:after {
+        clear: both; /* 清除伪类层以上的浮动 */
+        display: block;   /* 使生成的元素以块级元素显示,占满剩余空间; */
+        visibility: hidden; /* 设置伪类层内容为块级元素且不可见 */
+        height: 0;
+        line-height: 0; /* 设置伪类层中的高度和行高为0 */
+        content: " "; /* 将伪类层中的内容清空 */
+    }
+    .clearFix {
+        zoom: 1; /* 针对IE浏览器产生hasLayout效果清除浮动 */
+    }
+
+
+</pre>
+
+
+</body>
+</html>
