@@ -12,7 +12,7 @@ server指令
 uostream指令
 
 
-部署NodeJS
+一、部署NodeJS
 1、open https://brew.sh/index_zh-cn.html
 2、brew search nginx  brew install nginx
 3、brew info nginx
@@ -53,3 +53,21 @@ http
 
 8、拷贝配置文件到Node项目目录重新修改
 9、服务端nginx地址
+
+二、nginx 源码安装
+官网 http://nginx.org/
+1、下载 wget http://nginx.org/download/nginx-1.12.2.tar.gz
+2、解压 tar zxvf nginx-1.12.2.tar.gz
+查看是否生成新的目录 nginx-1.12.2   ll
+3、cd nginx-1.12.2
+4、gcc   输入该命令检查linux是否安装了编译器 若没有安装 执行步骤5
+5、yum install gcc
+6、./configure      安装完后执行configure脚本 若没有权限 先增加可执行权限  chmod +x configure
+7、make            编译nginx
+8、make install    安装完毕
+9、cd /usr/local/nginx   进行目录
+10、cd sbin/
+11、./nginx              启动服务  配置文件为nginx.conf    vi nginx.conf
+12、ps aux | grep nginx   过滤查看ngin进程
+13、kill pid   通过pid杀进程 杀主进程 pid小的为主进程 （kill -9 pid 强制杀进程 慎用！！）
+14、netstat -atunlp |grep 80             查看占用某个端口的进程(centos7.0以上用 ss 命令)

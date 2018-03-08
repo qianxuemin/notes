@@ -87,3 +87,7 @@ kill 1412
 文件间的复制 cp file1 file2
 文件到目录的复制  cp source_file ... target_directory   省略号表示多个 source_file
 目录间的复制 cp -R source_directory target_directory
+
+
+
+
