@@ -42,3 +42,11 @@ nodejs代码是单线程的，可以通过两种机制启动 cluster、fork，pm
 控制台检测
 提供http api
 远程控制和实时的接口api
+
+6、node优势
+预处理 server端模板 将后端变量打到前端
+解决跨域 后端没有域的概念
+seo/ssr 直出页面 服务的渲染 前后同构
+安全 后端api代理给node 反向代理
+前端端分离 没有后端java也可以跑
+
