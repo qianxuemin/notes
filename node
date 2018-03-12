@@ -50,3 +50,7 @@ seo/ssr 直出页面 服务的渲染 前后同构
 安全 后端api代理给node 反向代理
 前端端分离 没有后端java也可以跑
 
+npm install --production
+
+添加了production  参数后将仅仅安装 package.json 中dependencies 里面的包，不会安装devDependencies 里面的
+
