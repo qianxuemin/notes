@@ -55,7 +55,7 @@ mv test_key* .ssh/
 远程传输文件 把公钥复制到另一台服务器
 scp ./test_key.pub root@192.168.0.1:/root/.ssh
 
-cat test_key.pub >> authorized_keys //追加文件
+cat test_key.pub >> authorized_keys //在要远程登录的服务器的.ssh目录下执行追加文件
 exit
 下一步开始免密登陆
 ssh -i ～/.ssh/test_key root@192.168.0.1
