@@ -52,7 +52,7 @@ ll
 mv test_key* .ssh/
 私钥权限为当前用户可读可写 不给其他权限
 
-远程传输文件 把公钥复制到另一台服务器
+远程传输文件 把公钥复制到需要远程登录的一台服务器
 scp ./test_key.pub root@192.168.0.1:/root/.ssh
 
 cat test_key.pub >> authorized_keys //在要远程登录的服务器的.ssh目录下执行追加文件
@@ -60,9 +60,23 @@ exit
 下一步开始免密登陆
 ssh -i ～/.ssh/test_key root@192.168.0.1
 
-如果不想用文件路径登陆  修改配置文件config
-然后 就可以用别名免密登陆了
-ssh 别名
+如果不想用文件路径登陆
+  在本机的.ssh目录下新建config文件 并修改配置文件config
+
+  User root //以什么用户登录
+  Host qxmcentos //要登录的服务器别名
+  HostName 47.95.243.254 //要登录的服务器ip或域名
+  Port 22        //要登录的服务器的端口 默认22
+  StrictHostKeyChecking no //热键检查
+  IdentityFile ~/.ssh/qxm_rsa //私钥完整路径
+  IdentitiesOnly yes    //只允许秘钥登录
+  Protocol 2   //SSH版本
+  Compression yes
+  ServerAliveInterval 60
+  ServerAliveCountMax 20
+  LogLevel INFO
+
+然后 就可以用别名免密登陆了 ssh 别名 (ssh qxmcentos)
 
 svn help
 git help
