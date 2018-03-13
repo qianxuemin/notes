@@ -53,7 +53,7 @@ mv test_key* .ssh/
 私钥权限为当前用户可读可写 不给其他权限
 
 远程传输文件 把公钥复制到另一台服务器
-scp ./test_key.pub root@192.168.0.1:root/.ssh
+scp ./test_key.pub root@192.168.0.1:/root/.ssh
 
 cat test_key.pub >> authorized_keys //追加文件
 exit
