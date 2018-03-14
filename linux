@@ -81,7 +81,7 @@ ssh -i ～/.ssh/test_key root@192.168.0.1
 svn help
 git help
 
-brew安装
+brew安装mac软件
 
 
 远程传文件
