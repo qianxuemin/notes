@@ -85,7 +85,7 @@ brew安装mac软件
 
 
 远程传文件
-scp命令
+scp命令 scp -r /Users/qianxuemin/Desktop/expressTest root@47.95.243.254:/root/
 或安装samba共享  yum install samba
 并在etc文件下配置 cd/etc/、cd samba/、【homes】 path、 creat mask
 systemctl start smb (centos7之后版本启动服务)
