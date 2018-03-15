@@ -50,7 +50,23 @@ seo/ssr 直出页面 服务的渲染 前后同构
 安全 后端api代理给node 反向代理
 前端端分离 没有后端java也可以跑
 
-npm install --production
+7、 npm install --production
+ 添加了production  参数后将仅仅安装 package.json 中dependencies 里面的包，不会安装devDependencies 里面的
 
-添加了production  参数后将仅仅安装 package.json 中dependencies 里面的包，不会安装devDependencies 里面的
+8、PM2 常用命令
+pm2 start app.js --name=demo //启动app.js 命名为demo
+pm2 stop demo
+pm2 restart demo
+pm2 delete demo
+pm2 delete all
+pm2 show demo
+pm2 list
+
+pm2 monit //pm2自带一个简单的监控工具
+pm2 link //网页监控  https://app.keymetrics.io
+pm2 start app.js --name test -i num //负载均衡 一台服务器跑多个进程 num可以为：0，max，数字 几核
+
+
+pm2 serve . 9001 --name test --watch
+//把当前文件夹下的静态文件跑起来，端口号是9001 pm2可以监听静态文件，但是并没有做到自动刷新页面这一步 推荐live-server
 
